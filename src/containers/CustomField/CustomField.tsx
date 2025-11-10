@@ -13,6 +13,10 @@ const CustomFieldExtension = () => {
     let taxonomy: any[] = []
 
     useEffect(() => {
+        setFieldData(false)
+    }, [])
+
+    useEffect(() => {
         ContentstackAppSDK.init().then(async (appSDK: any) => {
             const cF = await appSDK.location.CustomField
             const entry: Entry = cF.entry
@@ -20,10 +24,10 @@ const CustomFieldExtension = () => {
             const validateFields = async (entry: Entry, taxonomy: any) => {
                 const { select, taxonomies } = await entry.getDraftData()
                 if (select && taxonomies) {
-                    const selectedTaxonomies = taxonomies.map((t: any) => { return { term_uid: t.term_uid, taxonomy_uid: t.taxonomy_uid, name: taxonomy.find((tax: any) => tax.uid === t.term_uid)?.name } }).filter((tag: any) => select.includes(tag.name))
-                    if (selectedTaxonomies.length !== 0) setSuccess(true)
-                    else setSuccess(false)
-                } else setSuccess(null)
+                    const selectedTaxonomies = taxonomies.map((t: any) => { return { term_uid: t.term_uid, taxonomy_uid: t.taxonomy_uid, name: taxonomy.find((tax: any) => tax.uid === t.term_uid)?.name } }).filter((tag: any) => select === tag.name)
+                    if (selectedTaxonomies.length !== 0) { setSuccess(true); setFieldData("success") }
+                    else { setSuccess(false); setFieldData(false) }
+                } else { setSuccess(null); setFieldData(false) }
             }
 
             const fetchTaxonomy = async () => {
