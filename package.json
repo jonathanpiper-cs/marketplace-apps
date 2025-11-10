@@ -7,6 +7,8 @@
   ],
   "dependencies": {
     "@contentstack/app-sdk": "^2.2.0",
+    "@contentstack/management": "^1.25.1",
+    "@contentstack/venus-components": "^3.0.2",
     "@types/jest": "^29.5.11",
     "@types/node": "^18.19.4",
     "@types/react": "^18.2.46",
